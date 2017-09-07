@@ -28,8 +28,24 @@ module.exports.connections = {
   * Installed by default.                                                    *
   *                                                                          *
   ***************************************************************************/
+  /*
   localDiskDb: {
     adapter: 'sails-disk'
+  },*/
+
+  someMysqlServer: {
+    adapter: 'sails-mysql',
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE_NAME
+  },
+  testMysqlServer: {
+    adapter: 'sails-mysql',
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_TEST_DATABASE_NAME
   },
 
   /***************************************************************************
