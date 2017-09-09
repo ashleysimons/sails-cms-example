@@ -25,6 +25,10 @@ module.exports = {
       index: true,
       required: true,
     },
+    session: {
+      collection: 'session',
+      via: 'user'
+    },
     toJSON: function(){
       const obj = this.toObject();
       delete obj.password;
@@ -35,7 +39,10 @@ module.exports = {
     cb();
   },
   beforeCreate: function(user, cb) {
-    // hash password
-    cb();
-  }
+    CipherService.hashPassword(user)
+      .then(function(user){
+        cb();
+      })
+      .catch(err => cb(err));
+  },
 }

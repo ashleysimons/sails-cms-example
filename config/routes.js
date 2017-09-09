@@ -45,4 +45,8 @@ module.exports.routes = {
   ***************************************************************************/
 
   'get /login': 'LoginController.index',
+  'post /login': 'LoginController.post',
+
+  // ADMIN
+  'get /admin/page': 'PageController.index',
 };
