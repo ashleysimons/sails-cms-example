@@ -1,0 +1,18 @@
+<form action="<%= sails.getUrlFor('PageController.create') %>" method="post">
+    <div class="form-group <% if (form.hasError('title')) { %>has-danger<% } %>">
+        <label for="pageTitle">Title</label>
+        <input type="text" class="form-control" id="pageTitle" name="title" aria-describedby="pageTitleHelp" placeholder="My title">
+        <small id="pageTitleHelp" class="form-text text-muted">A short name</small>
+    </div>
+    <div class="form-group <% if (form.hasError('summary')) { %>has-danger<% } %>">
+        <label for="pageSummary">Summary</label>
+        <textarea class="form-control" id="pageSummary" name="summary" rows="3"></textarea>
+    </div>
+    <div class="form-group <% if (form.hasError('content')) { %>has-danger<% } %>">
+        <label for="pageContents">Contents</label>
+        <textarea class="form-control" id="pageContents" name="content" rows="10"></textarea>
+    </div>
+
+    <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+    <input type="submit" class="btn btn-primary" value="Submit "/>
+</form>

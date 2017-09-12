@@ -49,4 +49,6 @@ module.exports.routes = {
 
   // ADMIN
   'get /admin/page': 'PageController.index',
+  'get /admin/page/create': 'PageController.create',
+  'post /admin/page/create': 'PageController.create',
 };
