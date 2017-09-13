@@ -13,30 +13,58 @@
             <thead class="thead">
             <tr>
                 <th>#</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Username</th>
+                <th>Page</th>
+                <th>Summary</th>
             </tr>
             </thead>
             <tbody>
+            <% _.each(pages, function (page) { %>
             <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+                <th scope="row"><%= page.id %></th>
+                <td><%= page.title %></td>
+                <td><%= page.summary %></td>
             </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-            </tr>
+            <% }) %>
             </tbody>
         </table>
+    <div style="text-align: center; width: 100%">
+    <nav aria-label="...">
+        <ul class="pagination">
+
+            <!-- PREVIOUS BUTTON -->
+
+            <% if(UtilService.isPrevious(pageCount, req)) { %>
+                <li class="page-item">
+                    <a class="page-link" href="/admin/page?page=<%= req.param('page') - 1 %>">Previous</a>
+                </li>
+            <% } else { %>
+                <li class="page-item disabled">
+                    <span class="page-link">Previous</span>
+                </li>
+            <% } %>
+
+            <!-- PAGE LINK LOOP -->
+
+            <% for(var i=1;i<=pageCount;i++) { %>
+            <li class="page-item<% if(req.param('page', 1) == i) {%> active <% } %>"><a class="page-link " href="/admin/page?page=<%= i %>"><%= i %></a></li>
+            <% } %>
+
+            <!-- NEXT BUTTON -->
+
+            <% if(UtilService.isNext(pageCount, req)) { %>
+                <li class="page-item">
+                    <a class="page-link" href="/admin/page?page=<%- parseInt(req.param('page', 1)) + 1 %>">Next</a>
+                </li>
+            <% } else { %>
+                <li class="page-item disabled">
+                    <span class="page-link">Next</span>
+                </li>
+            <% } %>
+        </ul>
+    </nav>
+
+        <p>
+          <%= pages.length %> items of <%= count %> total.
+        </p>
+    </div>
 </div>

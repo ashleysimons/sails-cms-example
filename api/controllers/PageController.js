@@ -2,9 +2,25 @@ const FormHelper = require('../helper/form');
 const PageForm = require('../helper/forms/page');
 const validator = require('validator');
 const isRequired = 'Frield is required. ';
+const limit = 1;
 module.exports = {
   index: function (req, res) {
-    res.view('admin/page');
+    let pageNo = req.param('page') ? req.param('page') : 1;
+    let viewVars = {};
+
+    Page.find().sort('createdAt desc').paginate({page: pageNo, limit: limit })
+      .then(function(pages){
+        viewVars.pages = pages;
+        return Page.count();
+      })
+      .then(function(count){
+        viewVars.count = count;
+        viewVars.pageCount = Math.floor(count / limit);
+        res.view('admin/page', viewVars);
+      })
+      .catch(function(error){
+        res.serverError(error)
+      });
   },
   create: function (req, res) {
     let form = new PageForm();
