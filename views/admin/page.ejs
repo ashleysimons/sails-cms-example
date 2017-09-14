@@ -19,7 +19,7 @@
             </thead>
             <tbody>
             <% _.each(pages, function (page) { %>
-            <tr>
+            <tr class="clickable-row" data-href="/admin/page/<%= page.id %>">
                 <th scope="row"><%= page.id %></th>
                 <td><%= page.title %></td>
                 <td><%= page.summary %></td>
@@ -66,5 +66,13 @@
         <p>
           <%= pages.length %> items of <%= count %> total.
         </p>
+
+        <script type="text/javascript">
+        $(document).ready(function($) {
+            $(".clickable-row").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+        </script>
     </div>
 </div>
