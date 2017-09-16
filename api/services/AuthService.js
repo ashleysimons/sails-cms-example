@@ -22,7 +22,7 @@ module.exports = {
      let sessionId = CipherService.generateSessionId();
      return Session.create({
        user: user.id,
-       id: sessionId,
+       token: sessionId,
      });
    }
 

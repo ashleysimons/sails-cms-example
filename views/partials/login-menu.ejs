@@ -1,6 +1,6 @@
 <% if (typeof req.user != 'undefined') { %>
     <li class="nav-item">
-    <a class="nav-link" href="<%= sails.getUrlFor('LoginController.index') %>">Logout</a>
+    <a class="nav-link" href="<%= sails.getUrlFor('LoginController.signout') %>">Logout</a>
     </li>
 <% } else { %>
     <li class="nav-item">

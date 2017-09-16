@@ -14,7 +14,7 @@ module.exports = function(req, res, next) {
   // User is allowed, proceed to the next policy,
   // or if this is the last policy, the controller
   if (req.cookies.said) {
-    Session.findOne({id: req.cookies.said}).populate('user')
+    Session.findOne({token: req.cookies.said}).populate('user')
       .then(function(session){
         if(session && session.id){
           req.user = session.user;

@@ -6,7 +6,7 @@
  */
 module.exports = {
   attributes: {
-    id: {
+    token: {
       type: 'string',
       unique: true,
       index: true,

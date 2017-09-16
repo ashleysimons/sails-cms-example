@@ -47,6 +47,7 @@ module.exports.routes = {
 
   'get /login': 'LoginController.index',
   'post /login': 'LoginController.post',
+  'get /logoff': 'LoginController.signout',
 
   // ADMIN
   'get /admin/page': 'PageController.index',

@@ -16,11 +16,13 @@ exports.setup = function(options, seedLink) {
 
 exports.up = function(db) {
   return db.runSql("CREATE TABLE `session` (\
-    `id` varchar(255) DEFAULT NULL,\
+    `token` varchar(255) DEFAULT NULL,\
     `user` int(11) DEFAULT NULL,\
+    `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\
     `createdAt` datetime DEFAULT NULL,\
     `updatedAt` datetime DEFAULT NULL,\
-    UNIQUE KEY `id` (`id`)\
+    PRIMARY KEY (`id`),\
+    UNIQUE KEY `token` (`token`)\
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 };
 

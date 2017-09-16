@@ -15,7 +15,7 @@ module.exports = {
         AuthService.createSession(user)
           .then(function(session){
             req.addFlash('success', "You were signed in!");
-            res.cookie('said', session.id, { maxAge: 60*60*60*24*31, httpOnly: true });
+            res.cookie('said', session.token, { maxAge: 60*60*60*24*31, httpOnly: true });
             res.redirect('/admin/page');
           })
           .catch(function(error){
@@ -26,5 +26,21 @@ module.exports = {
       req.addFlash('danger', message);
       res.redirect('/login');
     });
+  },
+  signout: function(req, res){
+    sails.log.debug(req.cookies.said);
+    if(req.cookies.said != undefined){
+      Session.destroy({token: req.cookies.said})
+        .exec(function(err){
+          if(err){
+            return res.serverError(err);
+          }
+          req.addFlash('success', "You were logged out!");
+          res.cookie('said', null, { maxAge: 60*60*60*24*31, httpOnly: true });
+          res.redirect('/');
+      });
+    } else {
+      res.redirect('/');
+    }
   }
 };
