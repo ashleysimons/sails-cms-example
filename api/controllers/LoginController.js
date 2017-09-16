@@ -1,7 +1,13 @@
 const message = "Did not match records. ";
 module.exports = {
   index: function (req, res) {
-    res.view('login/index');
+    Page.find().sort('createdAt DESC')
+      .then(function(pages){
+        res.view('login/index', {pages: pages});
+      })
+      .catch(function(error){
+        res.serverError(error);
+      });
   },
   post: function(req, res) {
     AuthService.hasCorrectPassword(req.param('email'), req.param('password'))

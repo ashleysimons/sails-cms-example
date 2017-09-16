@@ -6,7 +6,7 @@ const limit = 2;
 module.exports = {
   index: function (req, res) {
     let pageNo = req.param('page') ? req.param('page') : 1;
-    let viewVars = {};
+    let viewVars = { isAdmin: true };
 
     Page.find().sort('createdAt desc').paginate({page: pageNo, limit: limit })
       .then(function(pages){
@@ -25,6 +25,7 @@ module.exports = {
   create: function (req, res) {
     let form = new PageForm();
     let helper = new FormHelper(req, form);
+    let viewVars = {form: helper, isAdmin: true};
 
     if(req.method == 'POST'){
 
@@ -38,7 +39,7 @@ module.exports = {
         helper.addError('content', isRequired)
       }
       if(helper.hasErrors()){
-        res.view('admin/page-create', {form: helper});
+        res.view('admin/page-create', viewVars);
       } else {
         Page.create(_.omit(req.allParams(), 'id'))
           .then(function(page){
@@ -50,12 +51,13 @@ module.exports = {
       }
 
     } else {
-      res.view('admin/page-create', {form: helper});
+      res.view('admin/page-create', viewVars);
     }
   },
   edit: function (req, res) {
     let form = new PageForm();
     let helper = new FormHelper(req, form);
+    let viewVars = {form: helper, isAdmin: true};
 
     if(req.method == 'POST'){
 
@@ -69,7 +71,7 @@ module.exports = {
         helper.addError('content', isRequired)
       }
       if(helper.hasErrors()){
-        res.view('admin/page-create', {form: helper});
+        res.view('admin/page-create', viewVars);
       } else {
         Page.update(req.param('id'), _.omit(req.allParams(), 'id'))
           .then(function(page){
@@ -86,7 +88,8 @@ module.exports = {
           if(!page) {
             res.notFound();
           } else {
-            res.view('admin/page-edit', {page: page, form: helper});
+            viewVars.page = page;
+            res.view('admin/page-edit', viewVars);
           }
         })
         .catch(function(error){
